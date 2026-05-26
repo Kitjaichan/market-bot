@@ -2,10 +2,8 @@ import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-# ====== 🧩 分段大合體：防止手機 App 切斷文字（直接複製這四行） ======
-PART1 = '8982537531:AAFcNzqKE3FXTCzch'
-PART2 = 'HRZRZ9EIRRdLNc1MI'
-TELEGRAM_BOT_TOKEN = PART1 + PART2
+# ================= 👑 100% 全新簽發·完美正確密鑰 👑 =================
+TELEGRAM_BOT_TOKEN = '8982537531:AAHNZE6Dj8jhoU4k70t97DwLebcx9iT1H1Q'
 TELEGRAM_CHAT_ID = '1411929518'
 # =========================================================================
 
