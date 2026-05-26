@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-# ================= 🚨 已自動為你填入加密密鑰 🚨 =================
+# ================= 🚨 Emilio 專屬的最新設定 🚨 =================
 TELEGRAM_BOT_TOKEN = '8982537531:AAFcNzqKE3FXTCzchHRZRZ9EIRRdLNc1MI'
 TELEGRAM_CHAT_ID = '1411929518'
 # =============================================================
@@ -32,7 +32,8 @@ def send_telegram(text):
         'parse_mode': 'Markdown',
         'disable_web_page_preview': True
     }
-    requests.post(url, json=payload)
+    res = requests.post(url, json=payload)
+    print(f"Telegram 狀態碼: {res.status_code}")
 
 if __name__ == "__main__":
     today = datetime.today().strftime('%Y-%m-%d')
