@@ -1,0 +1,25 @@
+name: Daily Market News Bot
+
+on:
+  schedule:
+    # 國際標準時間 13:00 = 香港時間晚上 21:00 準時觸發
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Script
+        run: python bot.py
