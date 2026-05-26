@@ -12,7 +12,6 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 
 def clean_html(raw_html):
     if not raw_html: return "無內容摘要"
-    # 用正則表達式完美拔除所有 HTML 標籤
     clean_text = re.sub(r'<[^>]+>', '', raw_html)
     clean_text = clean_text.replace('&nbsp;', ' ').strip()
     return clean_text
@@ -26,25 +25,25 @@ def get_yahoo_news_with_summary():
             news = []
             for item in root.findall('.//item')[:3]:
                 title = item.find('title').text
+                link = item.find('link').text  # 👈 捉返條連結出嚟
                 
                 summary_el = item.find('description')
                 raw_summary = summary_el.text if summary_el is not None else ""
                 
-                # 使用無敵正則清洗法
                 summary = clean_html(raw_summary)
                 if not summary or summary == "無內容摘要":
-                    summary = "點擊連結查看完整即時美股內文"
+                    summary = "請點擊下方連結查看即時內文"
                 elif len(summary) > 100: 
                     summary = summary[:100] + "..."
                 
-                news.append(f"📌 *【{title}】*\n📝 內容摘要: {summary}")
+                # 💡 終極排版：有標題、有摘要、兼且提供真正可點擊的連結！
+                news.append(f"📌 *【{title}】*\n📝 內容摘要: {summary}\n🔗 完整內文: [點擊這裡跳轉]({link})")
             return "\n\n".join(news)
     except Exception as e:
         print(f"Yahoo 新聞出錯: {e}")
     return "暫無最新財經新聞"
 
 def get_twitter_rss(username, display_name):
-    # 設定主要與備用兩條橋樑，防止塞車
     urls = [
         f"https://rsshub.app/twitter/user/{username}/replies=0",
         f"https://nitter.net/{username}/rss"
@@ -57,7 +56,6 @@ def get_twitter_rss(username, display_name):
                 items = root.findall('.//item')
                 if items:
                     title = items[0].find('title').text
-                    # 清洗 Twitter 內容
                     title = clean_html(title)
                     if len(title) > 100: title = title[:100] + "..."
                     return f"🌟 *【{display_name}】*\n💬 最新發言: {title}"
